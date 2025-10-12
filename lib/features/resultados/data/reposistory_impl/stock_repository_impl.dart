@@ -2,14 +2,16 @@ import 'package:dartz/dartz.dart';
 import 'package:practicando_clean/features/core/errors/failure.dart';
 import 'package:practicando_clean/features/resultados/data/datasource/stock_remote_datasource.dart';
 import 'package:practicando_clean/features/resultados/domain/entities/stock_entity.dart';
+import 'package:practicando_clean/features/resultados/domain/entities/stock_sistema_entity.dart';
 import 'package:practicando_clean/features/resultados/domain/repository/stock_repository.dart';
 
 class StockRepositoryImpl implements StockRepository {
   final StockRemoteDatasource stockRemoteDatasource;
 
-  StockRepositoryImpl({required this.stockRemoteDatasource});
+  // ignore: empty_constructor_bodies
+  StockRepositoryImpl({required this.stockRemoteDatasource}) {}
   @override
-  Future<Either<Failure, List<StockEntity>>> obtenerStockSistema({
+  Future<Either<Failure, List<StockEntity>>> obtenerStockFisico({
     required String codProducto,
   }) async {
     try {
@@ -22,6 +24,25 @@ class StockRepositoryImpl implements StockRepository {
       return Right(stockParseadoEntity);
     } catch (e) {
       return Left(ServerFailure('Error al obtener Stock del sistema Impl'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<StockSistemaEntity>>> obtenerStockSistema({
+    required String codigo,
+  }) async {
+    try {
+      final stockSistemaModel = await stockRemoteDatasource.obtenerApiSistema(
+        codigo: codigo,
+      );
+      final stockSistemaParseEntity = stockSistemaModel
+          .map((fisico) => fisico.toEntity())
+          .toList();
+      return Right(stockSistemaParseEntity);
+    } catch (e) {
+      return Left(
+        ServerFailure('Error al parsear del modelo a entidad Impl $e'),
+      );
     }
   }
 }

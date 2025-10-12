@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:practicando_clean/features/resultados/presentation/bloc/stock_bloc.dart';
 import 'package:practicando_clean/features/resultados/presentation/bloc/stock_event.dart';
-import 'package:practicando_clean/features/resultados/presentation/pages/cuadro_stock_sistema.dart';
+import 'package:practicando_clean/features/resultados/presentation/pages/cuadro_stock_fisico.dart';
 
 class PagResultados extends StatefulWidget {
   const PagResultados({super.key, required this.codigo});
@@ -28,7 +28,7 @@ class _PagResultadosState extends State<PagResultados> {
         slivers: [
           SliverAppBar(
             title: Text('Codigo: ${widget.codigo}'),
-            expandedHeight: 150,
+            expandedHeight: 50,
             pinned: true,
             floating: true,
           ),
@@ -61,7 +61,7 @@ class _PagResultadosState extends State<PagResultados> {
                             Text('STOCK'),
                           ],
                         ),
-                        CuadroStockSistema(codigo: widget.codigo),
+                        CuadroStockFisico(codigo: widget.codigo),
                       ],
                     ),
                   ),

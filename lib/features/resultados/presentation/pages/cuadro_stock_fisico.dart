@@ -4,15 +4,15 @@ import 'package:practicando_clean/features/resultados/presentation/bloc/stock_bl
 import 'package:practicando_clean/features/resultados/presentation/bloc/stock_event.dart';
 import 'package:practicando_clean/features/resultados/presentation/bloc/stock_state.dart';
 
-class CuadroStockSistema extends StatefulWidget {
-  const CuadroStockSistema({super.key, required this.codigo});
+class CuadroStockFisico extends StatefulWidget {
+  const CuadroStockFisico({super.key, required this.codigo});
   final String codigo;
 
   @override
-  State<CuadroStockSistema> createState() => _CuadroStockSistemaState();
+  State<CuadroStockFisico> createState() => _CuadroStockFisicoState();
 }
 
-class _CuadroStockSistemaState extends State<CuadroStockSistema> {
+class _CuadroStockFisicoState extends State<CuadroStockFisico> {
   @override
   void initState() {
     super.initState();
@@ -42,9 +42,23 @@ class _CuadroStockSistemaState extends State<CuadroStockSistema> {
               itemBuilder: (context, index) {
                 final s = listStock[index];
                 return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 3),
+                  padding: EdgeInsets.only(
+                    top: 12,
+                    bottom: 10,
+                    left: 10,
+                    right: 10,
+                  ),
                   child: Row(
                     children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //Text(s.)
+                          ],
+                        ),
+                      ),
                       Text('Zona ${s.zona} - Stand ${s.stand}'),
                       Text(s.cantidad),
                     ],
