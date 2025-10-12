@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:practicando_clean/features/resultados/presentation/bloc/stock_bloc.dart';
+import 'package:practicando_clean/features/resultados/presentation/bloc/stock_event.dart';
+import 'package:practicando_clean/features/resultados/presentation/pages/cuadro_stock_sistema.dart';
 
 class PagResultados extends StatefulWidget {
   const PagResultados({super.key, required this.codigo});
@@ -12,6 +16,9 @@ class _PagResultadosState extends State<PagResultados> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<StockBloc>().add(EventoStockObtenido(codigo: widget.codigo));
+    });
   }
 
   @override
@@ -20,10 +27,47 @@ class _PagResultadosState extends State<PagResultados> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            title: Text('Codigo:'),
+            title: Text('Codigo: ${widget.codigo}'),
             expandedHeight: 150,
             pinned: true,
             floating: true,
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Text('Aqui va la descripcion del codigo'),
+                Card(
+                  color: Colors.blue[50],
+                  child: Padding(
+                    padding: EdgeInsetsGeometry.symmetric(
+                      vertical: 25,
+                      horizontal: 5,
+                    ),
+                    child: Column(
+                      children: [
+                        const Text(
+                          'STOCK SISTEMA',
+                          style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('ALMACEN'),
+                            SizedBox(width: 50),
+                            Text('STOCK'),
+                          ],
+                        ),
+                        CuadroStockSistema(codigo: widget.codigo),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

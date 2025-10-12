@@ -6,28 +6,49 @@ import 'package:practicando_clean/features/login/domain/usecase/get_usuario_usec
 import 'package:practicando_clean/features/login/presentation/bloc/usuario_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:practicando_clean/features/login/presentation/pages/sing_in.dart';
+import 'package:practicando_clean/features/resultados/data/datasource/stock_remote_datasource.dart';
+import 'package:practicando_clean/features/resultados/data/reposistory_impl/stock_repository_impl.dart';
+import 'package:practicando_clean/features/resultados/domain/usecase/get_stock_usecase.dart';
+import 'package:practicando_clean/features/resultados/presentation/bloc/stock_bloc.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: BlocProvider(
-        create: (_) => UsuarioBloc(
-          getUsuarioUsecase: GetUsuarioUsecase(
-            UsuarioRepositoryImpl(
-              usuarioRemoteDatasource: UsuarioRemoteDatasourceImpl(
-                client: http.Client(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => UsuarioBloc(
+            getUsuarioUsecase: GetUsuarioUsecase(
+              UsuarioRepositoryImpl(
+                usuarioRemoteDatasource: UsuarioRemoteDatasourceImpl(
+                  client: http.Client(),
+                ),
               ),
             ),
           ),
         ),
-        child: const SingIn(),
+        BlocProvider(
+          create: (_) => StockBloc(
+            getStockUsecase: GetStockUsecase(
+              StockRepositoryImpl(
+                stockRemoteDatasource: StockRemoteDatasourceImpl(
+                  client: http.Client(),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 28, 95, 184),
+          ),
+        ),
+        home: const SingIn(),
       ),
     );
   }

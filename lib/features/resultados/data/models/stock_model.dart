@@ -32,13 +32,13 @@ class StockModel {
   });
 
   factory StockModel.fromJson(Map<String, dynamic> json) => StockModel(
-    id: json["id"],
-    zona: json["Zona"],
-    stand: json["Stand"],
-    col: json["col"],
-    fil: json["fil"],
-    cantidad: json["Cantidad"],
-    img: json["Img"],
+    id: json["id"] ?? '',
+    zona: json["Zona"] ?? '',
+    stand: json["Stand"] ?? '',
+    col: json["col"] ?? '',
+    fil: json["fil"] ?? '',
+    cantidad: json["Cantidad"] ?? '',
+    img: json["Img"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {

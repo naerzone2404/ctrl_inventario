@@ -14,7 +14,7 @@ class StockBloc extends Bloc<StockEvent, StockState> {
 
       resultStock.fold(
         (failure) => emit(StateStockError(failure.message)),
-        (stockObtenido) => StateStockCargado(stockObtenido),
+        (stockObtenido) => emit(StateStockCargado(stockObtenido)),
       );
     });
   }

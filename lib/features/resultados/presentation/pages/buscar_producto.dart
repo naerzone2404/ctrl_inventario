@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:practicando_clean/features/login/presentation/widgets/inputs_decorations.dart';
+import 'package:practicando_clean/features/resultados/presentation/bloc/stock_bloc.dart';
 import 'package:practicando_clean/features/resultados/presentation/pages/pag_resultados.dart';
 
 class BuscarProducto extends StatefulWidget {
@@ -30,6 +32,7 @@ class _BuscarProductoState extends State<BuscarProducto> {
                   height: 50,
                   child: TextFormField(
                     controller: _insertarCodigo,
+                    keyboardType: TextInputType.numberWithOptions(),
                     decoration: InputsDecorations.inputsDecorationUsuario(
                       text: 'Codigo producto. ',
                     ),
@@ -38,8 +41,12 @@ class _BuscarProductoState extends State<BuscarProducto> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) =>
-                                (PagResultados(codigo: _insertarCodigo.text)),
+                            builder: (_) => BlocProvider.value(
+                              value: context.read<StockBloc>(),
+                              child: PagResultados(
+                                codigo: _insertarCodigo.text,
+                              ),
+                            ),
                           ),
                         );
                       }
