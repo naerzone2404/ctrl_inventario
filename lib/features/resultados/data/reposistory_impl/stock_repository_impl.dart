@@ -22,6 +22,8 @@ class StockRepositoryImpl implements StockRepository {
           .map((model) => model.toEntity())
           .toList();
       return Right(stockParseadoEntity);
+    } on Failure catch (e) {
+      return Left(ServerFailure(e.message));
     } catch (e) {
       return Left(ServerFailure('Error al obtener Stock del sistema Impl'));
     }
@@ -39,9 +41,11 @@ class StockRepositoryImpl implements StockRepository {
           .map((fisico) => fisico.toEntity())
           .toList();
       return Right(stockSistemaParseEntity);
+    } on Failure catch (e) {
+      return Left(ServerFailure(e.message));
     } catch (e) {
       return Left(
-        ServerFailure('Error al parsear del modelo a entidad Impl $e'),
+        ServerFailure('Error desconocido  del modelo a entidad Impl $e'),
       );
     }
   }

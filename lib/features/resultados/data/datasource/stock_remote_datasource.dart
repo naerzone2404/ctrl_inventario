@@ -23,9 +23,17 @@ class StockRemoteDatasourceImpl implements StockRemoteDatasource {
     print('el codigo: $codProcuto');
     final response = await client.get(link);
     if (response.statusCode == 200) {
-      final List<dynamic> jsonStock = jsonDecode(response.body);
-      print('Lista: $jsonStock');
-      return jsonStock.map((stock) => StockModel.fromJson(stock)).toList();
+      final jsonStock = jsonDecode(response.body);
+      if (jsonStock is Map<String, dynamic> && jsonStock.containsKey('error')) {
+        throw ServerFailure('Este codigo no existe en el sistema');
+      } else if (jsonStock is List<dynamic>) {
+        print('Lista de las ubicaciones: $jsonStock');
+        return jsonStock.map((stock) => StockModel.fromJson(stock)).toList();
+      } else {
+        throw ServerFailure('Error al no encontrar ese codigo no existente');
+      }
+
+      //return jsonStock.map((stock) => StockModel.fromJson(stock)).toList();
     } else {
       throw ServerFailure('Error al obtener datos(Fisico) del servidor web');
     }
@@ -41,10 +49,17 @@ class StockRemoteDatasourceImpl implements StockRemoteDatasource {
 
     final responseSistema = await client.get(url);
     if (responseSistema.statusCode == 200) {
-      final List<dynamic> jsonStockSistema = jsonDecode(responseSistema.body);
-      return jsonStockSistema
-          .map((system) => StockSistemaModel.fromJson(system))
-          .toList();
+      final jsonStockSistema = jsonDecode(responseSistema.body);
+      if (jsonStockSistema is Map<String, dynamic> &&
+          jsonStockSistema.containsKey('error')) {
+        throw ServerFailure('Codigo SBA NO EXISTE');
+      } else if (jsonStockSistema is List<dynamic>) {
+        return jsonStockSistema
+            .map((system) => StockSistemaModel.fromJson(system))
+            .toList();
+      } else {
+        throw ServerFailure('Formato de respuesta inesperado');
+      }
     } else {
       throw ServerFailure('Error al obtener datos(Sistema) del servidor web');
     }

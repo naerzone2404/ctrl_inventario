@@ -30,62 +30,65 @@ class _SingInState extends State<SingIn> {
     return Scaffold(
       body: BlocConsumer<UsuarioBloc, UsuarioState>(
         builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Form(
-              key: _fomrKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextFormField(
-                    controller: _username,
-                    keyboardType: TextInputType.number,
-                    decoration: InputsDecorations.inputsDecorationUsuario(
-                      text: 'Usuario@gmail.com',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Ingrese usuario';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 16),
-                  TextFormField(
-                    controller: _password,
-                    keyboardType: TextInputType.number,
-                    decoration: InputsDecorations.inputsDecorationUsuario(
-                      text: 'Contraseña',
-                    ),
-                    validator: (value) => value == null || value.isEmpty
-                        ? 'Ingrese Contraseña'
-                        : null,
-                  ),
-                  SizedBox(height: 16),
-                  if (state is UsuarioLoading)
-                    Center(child: CircularProgressIndicator())
-                  else
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_fomrKey.currentState!.validate()) {
-                          context.read<UsuarioBloc>().add(
-                            UsuarioIniciadoSesion(
-                              pass: _password.text,
-                              uss: _username.text,
-                            ),
-                          );
+          return Container(
+            decoration: BoxDecoration(),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Form(
+                key: _fomrKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextFormField(
+                      controller: _username,
+                      keyboardType: TextInputType.number,
+                      decoration: InputsDecorations.inputsDecorationUsuario(
+                        text: 'Usuario@gmail.com',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Ingrese usuario';
                         }
+                        return null;
                       },
-                      child: const Text('Iniciar Sesión'),
                     ),
-                  if (state is UsuarioAuthError) ...[
-                    const SizedBox(height: 16),
-                    Text(
-                      state.message,
-                      style: TextStyle(color: Colors.redAccent),
+                    SizedBox(height: 16),
+                    TextFormField(
+                      controller: _password,
+                      keyboardType: TextInputType.number,
+                      decoration: InputsDecorations.inputsDecorationUsuario(
+                        text: 'Contraseña',
+                      ),
+                      validator: (value) => value == null || value.isEmpty
+                          ? 'Ingrese Contraseña'
+                          : null,
                     ),
+                    SizedBox(height: 16),
+                    if (state is UsuarioLoading)
+                      Center(child: CircularProgressIndicator())
+                    else
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_fomrKey.currentState!.validate()) {
+                            context.read<UsuarioBloc>().add(
+                              UsuarioIniciadoSesion(
+                                pass: _password.text,
+                                uss: _username.text,
+                              ),
+                            );
+                          }
+                        },
+                        child: const Text('Iniciar Sesión'),
+                      ),
+                    if (state is UsuarioAuthError) ...[
+                      const SizedBox(height: 16),
+                      Text(
+                        state.message,
+                        style: TextStyle(color: Colors.redAccent),
+                      ),
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
           );

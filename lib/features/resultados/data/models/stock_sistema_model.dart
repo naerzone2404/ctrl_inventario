@@ -26,7 +26,7 @@ class StockSistemaModel {
   String subfamilia;
   String itemdescripcion;
   String pesoGramaje;
-  String? volumenCalibre;
+  dynamic volumenCalibre;
   String largo;
   String ancho;
   String marca;
@@ -53,22 +53,22 @@ class StockSistemaModel {
 
   factory StockSistemaModel.fromJson(Map<String, dynamic> json) =>
       StockSistemaModel(
-        compaia: json["compañia"],
-        item: json["item"],
-        estado: json["estado"],
-        name: json["Name"],
-        itemCode: json["ItemCode"],
-        stock: json["Stock"],
-        linea: json["linea"],
-        familia: json["familia"],
-        subfamilia: json["subfamilia"],
-        itemdescripcion: json["itemdescripcion"],
-        pesoGramaje: json["PESO(GRAMAJE)"],
-        volumenCalibre: json["VOLUMEN(CALIBRE)"],
-        largo: json["largo"],
-        ancho: json["ancho"],
-        marca: json["marca"],
-        unit: json["Unit"],
+        compaia: json["compañia"] ?? '',
+        item: json["item"] ?? '',
+        estado: json["estado"] ?? '',
+        name: json["Name"] ?? '',
+        itemCode: json["ItemCode"] ?? '',
+        stock: json["Stock"] ?? '',
+        linea: json["linea"] ?? '',
+        familia: json["familia"] ?? '',
+        subfamilia: json["subfamilia"] ?? '',
+        itemdescripcion: json["itemdescripcion"] ?? '',
+        pesoGramaje: json["PESO(GRAMAJE)"] ?? '',
+        volumenCalibre: json["VOLUMEN(CALIBRE)"] ?? '',
+        largo: json["largo"] ?? '',
+        ancho: json["ancho"] ?? '',
+        marca: json["marca"] ?? '',
+        unit: json["Unit"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {

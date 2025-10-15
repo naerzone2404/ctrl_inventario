@@ -19,7 +19,7 @@ class StockModel {
   String col;
   String fil;
   String cantidad;
-  String img;
+  List<String> imgs;
 
   StockModel({
     required this.id,
@@ -28,18 +28,33 @@ class StockModel {
     required this.col,
     required this.fil,
     required this.cantidad,
-    required this.img,
+    required this.imgs,
   });
 
-  factory StockModel.fromJson(Map<String, dynamic> json) => StockModel(
-    id: json["id"] ?? '',
-    zona: json["Zona"] ?? '',
-    stand: json["Stand"] ?? '',
-    col: json["col"] ?? '',
-    fil: json["fil"] ?? '',
-    cantidad: json["Cantidad"] ?? '',
-    img: json["Img"] ?? '',
-  );
+  factory StockModel.fromJson(Map<String, dynamic> json) {
+    List<String> pasearImgs = [];
+
+    try {
+      final raw = json['Img'] ?? '[]';
+      print('lista decodificada --> $raw');
+      final decoded = jsonDecode(raw);
+      print('lista decodificada --> $decoded');
+      if (decoded is List) {
+        pasearImgs = decoded.map((e) => e.toString()).toList();
+      }
+    } catch (e) {
+      print('Error al parsear imagenes: $e');
+    }
+    return StockModel(
+      id: json["id"] ?? '',
+      zona: json["Zona"] ?? '',
+      stand: json["Stand"] ?? '',
+      col: json["col"] ?? '',
+      fil: json["fil"] ?? '',
+      cantidad: json["Cantidad"] ?? '',
+      imgs: pasearImgs,
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "id": id,
@@ -48,7 +63,7 @@ class StockModel {
     "col": col,
     "fil": fil,
     "Cantidad": cantidad,
-    "Img": img,
+    "Img": imgs,
   };
 
   StockEntity toEntity() {
@@ -59,7 +74,7 @@ class StockModel {
       col: col,
       fil: fil,
       cantidad: cantidad,
-      img: img,
+      imgs: imgs,
     );
   }
 }

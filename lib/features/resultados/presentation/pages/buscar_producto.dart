@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:practicando_clean/features/login/presentation/widgets/inputs_decorations.dart';
-import 'package:practicando_clean/features/resultados/presentation/bloc/stock_bloc.dart';
+import 'package:practicando_clean/features/resultados/presentation/bloc/stock/stock_bloc.dart';
 import 'package:practicando_clean/features/resultados/presentation/pages/pag_resultados.dart';
 
 class BuscarProducto extends StatefulWidget {

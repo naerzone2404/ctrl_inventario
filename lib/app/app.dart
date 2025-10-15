@@ -9,7 +9,8 @@ import 'package:practicando_clean/features/login/presentation/pages/sing_in.dart
 import 'package:practicando_clean/features/resultados/data/datasource/stock_remote_datasource.dart';
 import 'package:practicando_clean/features/resultados/data/reposistory_impl/stock_repository_impl.dart';
 import 'package:practicando_clean/features/resultados/domain/usecase/get_stock_usecase.dart';
-import 'package:practicando_clean/features/resultados/presentation/bloc/stock_bloc.dart';
+import 'package:practicando_clean/features/resultados/presentation/bloc/stock/stock_bloc.dart';
+import 'package:practicando_clean/features/resultados/presentation/bloc/stock_sistema/stock_sistema_bloc.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,6 +33,17 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => StockBloc(
             getStockUsecase: GetStockUsecase(
+              StockRepositoryImpl(
+                stockRemoteDatasource: StockRemoteDatasourceImpl(
+                  client: http.Client(),
+                ),
+              ),
+            ),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => StockSistemaBloc(
+            getStockSistemaUsecase: GetStockUsecase(
               StockRepositoryImpl(
                 stockRemoteDatasource: StockRemoteDatasourceImpl(
                   client: http.Client(),
