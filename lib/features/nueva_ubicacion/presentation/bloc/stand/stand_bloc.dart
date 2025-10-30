@@ -11,7 +11,7 @@ class StandBloc extends Bloc<StandEvent, StandState> {
       emit(StandLoading());
       final result = await coordenadasUsecase.callStand();
       result.fold(
-        (failure) => StandError(failure.message),
+        (failure) => emit(StandError(failure.message)),
         (stand) => emit(StandObtenido(stand)),
       );
     });

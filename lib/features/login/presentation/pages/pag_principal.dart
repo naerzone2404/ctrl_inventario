@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:practicando_clean/features/resultados/presentation/pages/buscar_producto.dart';
 
 class PagPrincipal extends StatefulWidget {
-  final String usuario;
   const PagPrincipal({super.key, required this.usuario});
-
+  final String usuario;
   @override
   State<PagPrincipal> createState() => _PagPrincipalState();
 }
 
 class _PagPrincipalState extends State<PagPrincipal> {
   int indice = 0;
-  List<Widget> vistas = [
-    BuscarProducto(),
+  List<Widget> get vistas => [
+    BuscarProducto(usuario: widget.usuario),
     Center(child: Text('Pag 2')),
     Center(child: Text('Pag 3')),
   ];
 
   void _seleccionarIndice(int index) {
     setState(() {
+      print('obtener el valor del usuario --------->> ${widget.usuario}');
       indice = index;
     });
   }

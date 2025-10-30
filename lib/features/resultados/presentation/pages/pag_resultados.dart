@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:practicando_clean/features/nueva_ubicacion/presentation/pages/page_nueva_ubicacion.dart';
 import 'package:practicando_clean/features/resultados/presentation/bloc/stock/stock_bloc.dart';
 import 'package:practicando_clean/features/resultados/presentation/bloc/stock/stock_event.dart';
 import 'package:practicando_clean/features/resultados/presentation/bloc/stock_sistema/stock_sistema_bloc.dart';
 import 'package:practicando_clean/features/resultados/presentation/bloc/stock_sistema/stock_sistema_event.dart';
-import 'package:practicando_clean/features/resultados/presentation/pages/agregar_nueva_ubicacion.dart';
 import 'package:practicando_clean/features/resultados/presentation/pages/cuadro_stock_fisico.dart';
 import 'package:practicando_clean/features/resultados/presentation/pages/cuadro_stock_sistema.dart';
 
 class PagResultados extends StatefulWidget {
-  const PagResultados({super.key, required this.codigo});
+  const PagResultados({super.key, required this.codigo, required this.usuario});
   final String codigo;
+  final String usuario;
 
   @override
   State<PagResultados> createState() => _PagResultadosState();
@@ -42,7 +43,7 @@ class _PagResultadosState extends State<PagResultados> {
           SliverToBoxAdapter(
             child: Column(
               children: [
-                Text('Aqui va la descripcion del codigo'),
+                Text('Usuario: ${widget.usuario}'),
                 Card(
                   color: Colors.blue[50],
                   child: Padding(
@@ -82,12 +83,17 @@ class _PagResultadosState extends State<PagResultados> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // final descrip =context.read<StockBloc>().add()
           Navigator.push(
             context,
             PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) =>
-                  AgregarNuevaUbicacion(),
-              transitionDuration: const Duration(microseconds: 350),
+                  PageNuevaUbicacion(
+                    codigo: widget.codigo,
+                    descripcion: '',
+                    usuario: widget.usuario,
+                  ),
+              transitionDuration: const Duration(microseconds: 500),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) =>
                       FadeTransition(

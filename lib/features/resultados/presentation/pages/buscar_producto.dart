@@ -5,7 +5,8 @@ import 'package:practicando_clean/features/resultados/presentation/bloc/stock/st
 import 'package:practicando_clean/features/resultados/presentation/pages/pag_resultados.dart';
 
 class BuscarProducto extends StatefulWidget {
-  const BuscarProducto({super.key});
+  final String usuario;
+  const BuscarProducto({super.key, required this.usuario});
 
   @override
   State<BuscarProducto> createState() => _BuscarProductoState();
@@ -45,6 +46,7 @@ class _BuscarProductoState extends State<BuscarProducto> {
                               value: context.read<StockBloc>(),
                               child: PagResultados(
                                 codigo: _insertarCodigo.text,
+                                usuario: widget.usuario,
                               ),
                             ),
                           ),

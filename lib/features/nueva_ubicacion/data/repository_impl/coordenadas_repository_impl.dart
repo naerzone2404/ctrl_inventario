@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:practicando_clean/features/core/errors/failure.dart';
 import 'package:practicando_clean/features/nueva_ubicacion/data/datasource/coordenadas_remote_datasource.dart';
 import 'package:practicando_clean/features/nueva_ubicacion/domain/entities/stand_entity.dart';
+import 'package:practicando_clean/features/nueva_ubicacion/domain/entities/ubicacion_entity.dart';
 import 'package:practicando_clean/features/nueva_ubicacion/domain/entities/zona_entity.dart';
 import 'package:practicando_clean/features/nueva_ubicacion/domain/repository/coordenadas_repository.dart';
 
@@ -28,6 +29,18 @@ class CoordenadasRepositoryImpl implements CoordenadasRepository {
       return Right(data);
     } catch (e) {
       return Left(ServerFailure('Error tipo: ${e.toString()}'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> insertarUbicacion(
+    UbicacionEntity ubicacion,
+  ) async {
+    try {
+      final result = await remoteDatasource.insertarUbicacion(ubicacion);
+      return Right(result);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
     }
   }
 }
